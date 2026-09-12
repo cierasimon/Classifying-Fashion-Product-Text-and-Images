@@ -20,5 +20,3 @@ python classifier.py
 
 ## Example
 Loads styles.csv, prints basic info (.head(), .info(), .describe(), missing values), filters/groups the data (e.g. season counts by gender), trains a Random Forest Classifier to predict baseColour from gender and season, and shows two plots: predicted colour distribution and model accuracy by season/gender.
-
-## Badge Status Information
