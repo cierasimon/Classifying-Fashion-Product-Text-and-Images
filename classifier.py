@@ -4,6 +4,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+import polars as pl
+import time
 
 #cd Classifying-Fashion-Product-Text-and-Images
 
@@ -47,10 +49,38 @@ plt.xlabel('Base Colour')
 plt.ylabel('Count')
 plt.show()
 
-#data visualization of model accuracy
+#data visualization of model accuracys
 results_df = data.loc[X_test.index, ['gender', 'season']].copy()
 results_df['correct'] = (y_test.values == result)
 results_df.groupby(['season', 'gender'])['correct'].mean().unstack().plot(kind='bar')
 plt.title('Model Accuracy by Season and Gender')
 plt.ylabel('Accuracy')
+plt.show()
+
+#polars implementation
+start = time.time()
+pl_data = pl.read_csv('styles.csv', ignore_errors=True, truncate_ragged_lines=True)
+pl_data = pl_data.with_columns([
+    pl.col('baseColour').fill_null('Unknown'),
+    pl.col('season').fill_null('Unknown'),
+])
+pl_grouped = pl_data.group_by(['gender', 'season', 'baseColour']).agg(pl.len().alias('count'))
+polars_time = time.time() - start
+
+#wanted to compare against pandas implementation  
+start = time.time()
+pd_data = pd.read_csv('styles.csv', on_bad_lines='skip')
+pd_data['baseColour'] = pd_data['baseColour'].fillna('Unknown')
+pd_data['season'] = pd_data['season'].fillna('Unknown')
+pd_grouped = pd_data.groupby(['gender', 'season', 'baseColour']).size()
+pandas_time = time.time() - start
+
+print(f'pandas load and groupby time: {pandas_time:.4f} sec')
+print(f'polars load and groupby time: {polars_time:.4f} sec')
+print('polars grouped result (head):', pl_grouped.head())
+
+plt.figure(figsize=(6, 5))
+plt.bar(['Pandas', 'Polars'], [pandas_time, polars_time], color=['steelblue', 'darkorange'])
+plt.ylabel('Seconds')
+plt.title('Pandas vs Polars: Load and Groupby Runtime')
 plt.show()
