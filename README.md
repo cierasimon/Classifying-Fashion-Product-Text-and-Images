@@ -4,6 +4,8 @@ An EDA and machine learning project that predicts clothing base colour from gend
 
 Explores the Fashion Product Images (Small) dataset from Kaggle, does basic EDA with Pandas, and trains a simple classifier to predict clothing base colour from gender and season.
 
+Slogan: Messy code is so last season. Clean architecture never goes out of style.
+
 ![Tests](https://github.com/cierasimon/Classifying-Fashion-Product-Text-and-Images/actions/workflows/tests.yml/badge.svg) it works!
 
 ## Organization for Grading
