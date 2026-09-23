@@ -2,6 +2,10 @@
 
 Explores the Fashion Product Images (Small) dataset from Kaggle, does basic EDA with Pandas, and trains a simple classifier to predict clothing base colour from gender and season.
 
+## Organization for Grading
+Python script: classifier.py README file: this file, and Rust Jupyter notebook: rust_vs_python_intro.ipynb<br>
+I want to clarify that I used the python template to create this, but only these 3 files are relevant for the assignment
+
 ## Packages to Install
 pandas
 numpy
